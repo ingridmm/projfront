@@ -3,6 +3,9 @@ import Create from './components/create';
 import Read from './components/read';
 import Update from './components/update';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import axios from 'axios';
+
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3000';
 
 
 function App() {
@@ -17,7 +20,6 @@ function App() {
         <div style={{ marginTop: 20 }}>
           <Route exact path='/read' component={Read} />
         </div>
-
         <Route path='/update' component={Update} />
       </div>
     </Router>
