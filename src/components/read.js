@@ -1,65 +1,68 @@
-
 import { Table, Button } from 'semantic-ui-react'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export default function Read() {
+
     const [APIData, setAPIData] = useState([]);
+
     useEffect(() => {
-        axios.get(`https://649a2b0179fbe9bcf840527e.mockapi.io/fakeData`)
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        axios
+            .get('http://localhost:8080/empresa')
             .then((response) => {
                 setAPIData(response.data);
             })
-    }, [])
+            .catch((error) => {
+                console.log('Error fetching data:', error);
+            });
+    };
 
-    const setData = (data) => {
-        let { id, firstName, lastName, checkbox } = data;
-        localStorage.setItem('ID', id);
-        localStorage.setItem('First Name', firstName);
-        localStorage.setItem('Last Name', lastName);
-        localStorage.setItem('Checkbox Value', checkbox)
-    }
-    const getData = () => {
-        axios.get(`https://649a2b0179fbe9bcf840527e.mockapi.io/fakeData`)
-            .then((getData) => {
-                setAPIData(getData.data);
-            })
-    }
     const onDelete = (id) => {
-        axios.delete(`https://649a2b0179fbe9bcf840527e.mockapi.io/fakeData/${id}`)
+        axios
+            .delete(`http://localhost:8080/empresa/${id}`)
             .then(() => {
-                getData();
+                fetchData();
             })
-    }
-
+            .catch((error) => {
+                console.log('Error deleting data:', error);
+            });
+    };
 
     return (
         <div>
             <Table singleLine>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell>First Name</Table.HeaderCell>
-                        <Table.HeaderCell>Last Name</Table.HeaderCell>
-                        <Table.HeaderCell>Checked</Table.HeaderCell>
-                        <Table.HeaderCell>Update</Table.HeaderCell>
+                        <Table.HeaderCell>Nome Fantasia</Table.HeaderCell>
+                        <Table.HeaderCell>CNPJ</Table.HeaderCell>
+                        <Table.HeaderCell>Ativo</Table.HeaderCell>
+                        <Table.HeaderCell textAlign='right'>Ações</Table.HeaderCell>
+                        <Table.HeaderCell></Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
                     {APIData.map((data) => {
+                        const status = data.ativo ? 'Ativo' : 'Desabilitado';
                         return (
-                            <Table.Row>
-                                <Table.Cell>{data.firstName}</Table.Cell>
-                                <Table.Cell>{data.lastName}</Table.Cell>
-                                <Table.Cell>{data.checkbox ? 'Checked' : 'Unchecked'}</Table.Cell>
-                                <Link to='/update'>
-                                    <Table.Cell>
-                                        <Button onClick={() => setData(data)}>Update</Button>
-                                    </Table.Cell>
-                                </Link>
+                            <Table.Row key={data.id}>
                                 <Table.Cell>
-                                    <Button onClick={() => onDelete(data.id)}>Delete</Button>
+                                    <Link to={`/view/${data.id}`}>{data.nomeFantasia}</Link>
+                                </Table.Cell>
+                                <Table.Cell>{data.cnpj}</Table.Cell>
+                                <Table.Cell>{status}</Table.Cell>
+                                <td>
+                                    <Link to={`/update/${data.id}`}>
+                                        <Button>Update</Button>
+                                    </Link>
+                                </td>
+                                <Table.Cell>
+                                    <Button negative circular onClick={() => onDelete(data.id)}>Delete</Button>
                                 </Table.Cell>
                             </Table.Row>
                         )

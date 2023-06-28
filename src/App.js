@@ -2,6 +2,7 @@ import './App.css';
 import Create from './components/create';
 import Read from './components/read';
 import Update from './components/update';
+import View from './components/view';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import axios from 'axios';
 
@@ -20,7 +21,12 @@ function App() {
         <div style={{ marginTop: 20 }}>
           <Route exact path='/read' component={Read} />
         </div>
-        <Route path='/update' component={Update} />
+        <div>
+        <Route path="/update/:id" component={Update} />
+        </div>
+        <div>
+        <Route exact path="/view/:id" component={View} />
+        </div>
       </div>
     </Router>
     </div>
