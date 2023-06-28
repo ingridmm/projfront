@@ -48,25 +48,25 @@ export default function Create() {
 
     const fetchAddressData = async (cep) => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/cep/${cep}`);
-          const { logradouro, bairro, cidade, uf } = response.data;
-          console.log(response.data);
+            const response = await axios.get(`http://localhost:8080/api/cep/${cep}`);
+            const { logradouro, bairro, cidade, uf } = response.data;
+            console.log(response.data);
 
-      
-          setData((prevState) => ({
-            ...prevState,
-            endereco: {
-              ...prevState.endereco,
-              logradouro,
-              bairro,
-              cidade,
-              uf
-            }
-          }));
+
+            setData((prevState) => ({
+                ...prevState,
+                endereco: {
+                    ...prevState.endereco,
+                    logradouro,
+                    bairro,
+                    cidade,
+                    uf
+                }
+            }));
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      };
+    };
 
     const addUser = async (e) => {
         e.preventDefault();

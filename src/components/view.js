@@ -5,24 +5,23 @@ import { useParams } from 'react-router-dom';
 
 export default function View() {
     const { id } = useParams();
-    const [APIData, setAPIData] = useState([]);
+    const [formData, setFormData] = useState(null);
 
     useEffect(() => {
+        const fetchData = () => {
+            axios
+                .get(`http://localhost:8080/empresa/${id}`)
+                .then((response) => {
+                    setFormData(response.data[0]);
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log('Error fetching data:', error);
+                });
+        };
+
         fetchData();
-    }, []);
-
-    const fetchData = () => {
-        axios
-            .get('http://localhost:8080/empresa')
-            .then((response) => {
-                setAPIData(response.data);
-            })
-            .catch((error) => {
-                console.log('Error fetching data:', error);
-            });
-    };
-
-    const formData = APIData.map((data) => data.id === id);
+    }, [id]);
 
     return (
         <div>
