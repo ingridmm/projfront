@@ -1,4 +1,4 @@
-import { Form, Input, Button } from 'semantic-ui-react';
+import { Segment, Form, Input, Button, Header, Icon } from 'semantic-ui-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -26,21 +26,31 @@ export default function View() {
     return (
         <div>
             {formData && (
-                <Form key={formData.id}>
-                    <Form.Field>
-                        <label>Nome Fantasia</label>
-                        <Input disabled value={formData.nomeFantasia} />
-                    </Form.Field>
-                    <Form.Field>
-                        <label>CNPJ</label>
-                        <Input disabled value={formData.cnpj} />
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Ativo</label>
-                        <Input disabled value={formData.ativo ? 'Ativo' : 'Desabilitado'} />
-                    </Form.Field>
-                    <Button onClick={() => window.history.back()}>Voltar</Button>
-                </Form>
+                <Segment inverted>
+                    <Form inverted key={formData.id}>
+                        <Header inverted as='h2'>
+                            <Icon name='archive' />
+                            <Header.Content>Empresa {formData.id}</Header.Content>
+                        </Header>
+                        <Form.Field>
+                            <label>Nome Fantasia</label>
+                            <div className="ui fluid input">
+                                <Input size="large" placeholder='Read only' readOnly value={formData.nomeFantasia} />
+                            </div>
+                        </Form.Field>
+                        <Form.Group widths='equal'>
+                            <Form.Field>
+                                <label>CNPJ</label>
+                                <Input size="large" placeholder='Read only' readOnly value={formData.cnpj} />
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Ativo</label>
+                                <Input size="large" placeholder='Read only' readOnly value={formData.ativo ? 'Ativo' : 'Desabilitado'} />
+                            </Form.Field>
+                        </Form.Group>
+                        <Button onClick={() => window.history.back()}>Voltar</Button>
+                    </Form>
+                </Segment>
             )}
         </div>
     );

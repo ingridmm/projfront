@@ -69,6 +69,9 @@ export default function Read() {
                     })}
                 </Table.Body>
             </Table>
+            <Link to={`/create/`}>
+                <Button>Cadastrar </Button>
+            </Link>
         </div>
     )
 }
