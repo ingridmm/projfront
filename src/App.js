@@ -3,6 +3,10 @@ import Create from './components/create';
 import Read from './components/read';
 import Update from './components/update';
 import View from './components/view';
+import CreateFornecedor from './components/createFornecedor';
+import ReadFornecedor from './components/readFornecedor';
+import UpdateFornecedor from './components/updateFornecedor';
+import ViewFornecedor from './components/viewFornecedor';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import axios from 'axios';
 import { Button, Divider, Segment } from 'semantic-ui-react'
@@ -15,7 +19,7 @@ function App() {
     <div>
       <Router>
         <div className="main">
-          <h2 className="main-header">React Crud Operations</h2>
+          <h2 className="main-header">Cad Company</h2>
           <Segment inverted textAlign='center'>
           <Link to={`/read`}>
             <Button basic inverted color='olive' content='Olive'>Empresas</Button>
@@ -34,6 +38,18 @@ function App() {
           </div>
           <div>
             <Route exact path="/view/:id" component={View} />
+          </div>
+          <div>
+            <Route exact path='/createFornecedor' component={CreateFornecedor} />
+          </div>
+          <div>
+            <Route exact path='/readFornecedor' component={ReadFornecedor} />
+          </div>
+          <div>
+            <Route exact path='/updateFornecedor/:id' component={UpdateFornecedor} />
+          </div>
+          <div>
+            <Route exact path='/viewFornecedor/:id' component={ViewFornecedor} />
           </div>
         </div>
       </Router>
