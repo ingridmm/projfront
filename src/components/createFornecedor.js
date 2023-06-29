@@ -167,7 +167,7 @@ export default function Create() {
                             <label>CNPJ ou CPF</label>
                             <div className="ui fluid input">
                                 <InputMask
-                                    mask={getDocumentoMask(data.cnpjOuCpf)}
+                                    mask={data.cnpjOuCpf.length <= 11 ? '999.999.999-99' : '99.999.999/9999-99'}
                                     maskChar={null}
                                     size="large"
                                     type="text"

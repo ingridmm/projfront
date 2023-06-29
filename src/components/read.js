@@ -1,4 +1,4 @@
-import { Table, Button } from 'semantic-ui-react'
+import { Table, Button, Modal } from 'semantic-ui-react'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 export default function Read() {
 
     const [APIData, setAPIData] = useState([]);
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -23,14 +25,28 @@ export default function Read() {
     };
 
     const onDelete = (id) => {
+        setDeleteConfirmation(true);
+        setItemToDelete(id);
+    };
+
+    const confirmDelete = () => {
         axios
-            .delete(`http://localhost:8080/empresa/${id}`)
+            .delete(`http://localhost:8080/empresa/${itemToDelete}`)
             .then(() => {
                 fetchData();
             })
             .catch((error) => {
                 console.log('Error deleting data:', error);
+            })
+            .finally(() => {
+                setDeleteConfirmation(false);
+                setItemToDelete(null);
             });
+    };
+
+    const cancelDelete = () => {
+        setDeleteConfirmation(false);
+        setItemToDelete(null);
     };
 
     return (
@@ -72,6 +88,20 @@ export default function Read() {
             <Link to={`/create/`}>
                 <Button>Cadastrar </Button>
             </Link>
+            <Modal open={deleteConfirmation} onClose={cancelDelete} size="tiny">
+                <Modal.Header>Confirmar Exclusão</Modal.Header>
+                <Modal.Content>
+                    <p>Você tem certeza que deseja excluir este item?</p>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button negative onClick={cancelDelete}>
+                        Cancelar
+                    </Button>
+                    <Button positive onClick={confirmDelete}>
+                        Confirmar
+                    </Button>
+                </Modal.Actions>
+            </Modal>
         </div>
     )
 }

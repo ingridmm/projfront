@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { Button, Input, Form, Segment, Header, Icon } from 'semantic-ui-react';
 
 export default function Update() {
-  
+
   const { id } = useParams();
   const [formData, setFormData] = useState(null);
   const [nomeFantasia, setNomeFantasia] = useState('');
@@ -63,8 +63,7 @@ export default function Update() {
                 <label>CNPJ</label>
                 <Input
                   size='large'
-                  placeholder='Read only'
-                  readOnly
+            
                   value={cnpj}
                 />
               </Form.Field>
